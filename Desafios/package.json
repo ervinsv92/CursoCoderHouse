@@ -1,0 +1,11 @@
+{
+  "name": "desafios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "001-desadio": "nodejs 001-desafio.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
