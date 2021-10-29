@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "001-desadio": "nodejs 001-desafio.js"
+    "001-desafio": "node 001-desafio.js"
   },
   "author": "",
   "license": "ISC"
