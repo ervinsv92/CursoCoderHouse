@@ -85,3 +85,8 @@ console.log("array from object: ", Array.from(objectoArr))
 
 //slice, buscar de tarea
 //reduce, buscar de tarea 
+
+//objetos
+Objects.keys
+Objects.values
+Objects.entries
