@@ -1,11 +1,10 @@
 {
-  "name": "basico",
+  "name": "afterclass",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "003":"node 003-clase-sincronica-asincronica.js"
+    "001": "node 001-arrays.js"
   },
   "author": "",
   "license": "ISC"
