@@ -84,3 +84,4 @@ let objectoArr = {name:'ervin', edad:10}
 console.log("array from object: ", Array.from(objectoArr))
 
 //slice, buscar de tarea
+//reduce, buscar de tarea 
