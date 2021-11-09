@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "003":"node 003-clase-sincronica-asincronica.js",
-    "004":"node 004-clase.js",
-    "dev":"nodemon index.js"
+    "003": "node 003-clase-sincronica-asincronica.js",
+    "004": "node 004-clase.js",
+    "005": "node 005-npm.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
 }
