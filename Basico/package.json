@@ -8,11 +8,17 @@
     "003": "node 003-clase-sincronica-asincronica.js",
     "004": "node 004-clase.js",
     "005": "node 005-npm.js",
+    "006": "node 006-servidores.js",
     "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.29.1"
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
