@@ -11,7 +11,7 @@ app.listen(PORT, ()=>{
 
 app.get('/productos', async (req, res)=>{
     let productos = await contenedor.getAll();
-    res.json({productos:JSON.stringify(productos)})
+    res.json({productos:productos})
 })
 
 app.get('/productoRandom', async (req, res)=>{
