@@ -9,6 +9,7 @@
     "004": "node 004-clase.js",
     "005": "node 005-npm.js",
     "006": "node 006-servidores.js",
+    "007": "node 007-express-avanzado.js",
     "dev": "nodemon index.js"
   },
   "author": "",
