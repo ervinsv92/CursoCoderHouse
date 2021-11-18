@@ -10,14 +10,18 @@
     "005": "node 005-npm.js",
     "006": "node 006-servidores.js",
     "007": "node 007-express-avanzado.js",
+    "008": "node 008-router-multer.js",
     "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "moment": "^2.29.1",
-    "mysql": "^2.18.1"
+    "multer": "^1.4.3",
+    "mysql": "^2.18.1",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
