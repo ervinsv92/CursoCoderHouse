@@ -1,0 +1,25 @@
+<%- include('./partials/header.ejs') -%> 
+
+<h1>Registrar producto</h1>
+<br>
+<a class="btn btn-success" href="/productos">Productos</a>
+<br>
+<div class="col-4">
+    <form action="/productos" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="price" name="price">
+        </div>
+        <div class="mb-3">
+            <label for="thumbnail" class="form-label">Url imagen</label>
+            <input type="text" class="form-control" id="thumbnail" name="thumbnail" value="https://picsum.photos/200/300">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<%- include('./partials/footer.ejs') -%> 

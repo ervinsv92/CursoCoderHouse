@@ -1,16 +1,14 @@
 let express = require("express");
 let app = express();
-let {engine} = require("express-handlebars");
 const router = require('./router');
 const PORT = 8080;
+const path = require ('path');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
-
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", "./views/");
-app.use(express.static("public"));
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname + '../public')));
 app.use("/", router);
 
 app.listen(PORT, err =>{

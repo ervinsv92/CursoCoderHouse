@@ -1,0 +1,21 @@
+extends template
+
+block contenido
+    h1="Registrar producto"
+    br
+    a(class="btn btn-success" href="/productos")="Productos"
+    br
+    div(class="col-4")
+        form(action="/productos" method="POST")
+            div(class="mb-3")
+                label(for="title" class="form-label")="Nombre"
+                input(type="text" class="form-control" id="title" name="title")
+
+            div(class="mb-3")
+                label(for="price" class="form-label")="Precio"
+                input(type="number" class="form-control" id="price" name="price")
+            
+            div(class="mb-3")
+                label(for="thumbnail" class="form-label")="Url imagen"
+                input(type="text" class="form-control" id="thumbnail" name="thumbnail" value="https://picsum.photos/200/300")
+            button(type="submit" class="btn btn-primary")="Guardar"

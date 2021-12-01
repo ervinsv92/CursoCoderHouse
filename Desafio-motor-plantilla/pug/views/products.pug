@@ -1,0 +1,15 @@
+extends template 
+
+block contenido
+    h1=Productos
+    br
+    a(class="btn btn-success" href="/")="Nuevo"
+    br
+    br
+    ul(class="list-group")
+        each producto in productos
+            li(class="list-group-item d-flex justify-content-between align-items-start")
+                div(class="ms-2 me-auto")
+                    div(class="fw-bold")=producto.title
+                    producto.price
+                img(src=producto.thumbnail)
