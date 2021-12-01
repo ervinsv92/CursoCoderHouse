@@ -2,7 +2,7 @@ class Data{
     constructor(){
         this.productos = [];
         this.ultimoId = 0;
-        this.init();
+        //this.init();
     }
 
     //Solo sirve para agregar datos de prueba

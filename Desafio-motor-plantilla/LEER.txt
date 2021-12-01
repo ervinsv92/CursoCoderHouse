@@ -1,0 +1,3 @@
+El motor de plantillas que mas me gusto fue ejs, ya que es el que es mas familar o cercano a html y 
+js que son lenguajes que todo desarrollador web tiene que aprender o ya sabe, 
+por esto pienso que reduce la curva de aprendizaje de la herramienta. 
