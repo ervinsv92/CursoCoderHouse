@@ -1,0 +1,69 @@
+<h1>Registrar producto - Handlebars</h1>
+<br>
+<a class="btn btn-success" href="/productos">Productos</a>
+<br>
+
+<div class="row mb-1">
+    <div class="col-4">
+        <form action="/productos" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label for="thumbnail" class="form-label">Url imagen</label>
+                <input type="text" class="form-control" id="thumbnail" name="thumbnail" value="https://picsum.photos/200/300">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<h2>Productos</h2>
+<br>
+<div class="row mb-1">
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td scope="row"></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Chat</h2>
+<br>
+<div class="row">
+
+</div>
+
+<script>
+    try{
+        let socket = io();
+
+        socket.on("init_productos", productos=>{
+            console.log("hola", productos)
+        })
+    }catch(err){
+        console.log(err)
+    }
+    
+</script>

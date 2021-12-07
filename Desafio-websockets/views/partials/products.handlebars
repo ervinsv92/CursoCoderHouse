@@ -1,0 +1,24 @@
+<h1>Productos - Handlebars</h1>
+<br/>
+<a class="btn btn-success" href="/">Nuevo</a>
+<br/>
+<br/>
+{{#unless productos}}
+    <div class="alert alert-warning" role="alert">
+        No hay productos para mostrar
+    </div>
+{{/unless}}
+
+{{#if productos}}
+<ul class="list-group">
+    {{#each productos}}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{this.title}}</div>
+                {{this.price}}
+            </div>
+            <img src="{{this.thumbnail}}"></img>
+        </li>
+    {{/each}}
+</ul>
+{{/if}}
