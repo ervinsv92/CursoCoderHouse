@@ -1,5 +1,9 @@
 let {Server: SocketIO} = require('socket.io');
+const Contenedor = require('../../Contenedor');
 let Data = require('../../data');
+let path = require('path');
+const RUTA_ARCHIVO = path.join(__dirname, '../../mensajes.txt');
+let contenedor = new Contenedor(RUTA_ARCHIVO);
 
 class Socket{
     static instancia;
@@ -10,20 +14,18 @@ class Socket{
 
         Socket.instancia = this;
         this.io = new SocketIO(http);
-        this.mensajes = [];
         this.data = new Data();
-        this.data.init();
     }
 
     init(){
         try {
-            this.io.on("connection", socket =>{
-                console.log("Usuario conectado");
-                socket.emit("init_productos", this.data.obtenerProductos());
-                socket.emit("init_mensajes", this.mensajes);
-                socket.on("mensaje", data =>{
-                    this.mensajes.push(data);
-                    this.io.emit('escuchar_mensajes', this.mensajes);
+            this.io.on("connection", async (socket) =>{
+                socket.emit("escuchar_productos", this.data.obtenerProductos());
+                socket.emit("escuchar_mensajes", await contenedor.getAll());
+
+                socket.on("mensaje", async (data) =>{
+                    await contenedor.save(data);
+                    this.io.emit('escuchar_mensajes',await contenedor.getAll());                    
                 });
 
                 socket.on("producto", data =>{
