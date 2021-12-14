@@ -1,1 +1,1 @@
-[{"name":"arroz","id":"ab854782-bb69-4530-a2e0-14e1a612722b"},{"name":"arroz 3","id":"1a3e5cb3-4daa-47de-9158-09354adb2ec7"}]
+[{"name":"arroz","id":"ab854782-bb69-4530-a2e0-14e1a612722b"},{"name":"arroz 3","id":"1a3e5cb3-4daa-47de-9158-09354adb2ec7"},{"name":"PC","price":750000,"description":"una pc gamer muy buena","code":"50609841","image":"url","stock":10,"id":"3b0e6224-e161-4e97-94e5-035842ad2f46"}]
