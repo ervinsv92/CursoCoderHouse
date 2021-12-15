@@ -53,10 +53,10 @@ class ProductService{
             throw new Error(`El producto con el id: ${id} no se encuentra.`);
         }
 
-        const eliminado = list[idx];
+        const eliminate = list[idx];
         list = list.filter(x => x.id != id);
         await this.fileHelper.saveFile(list);
-        return eliminado;
+        return eliminate;
     }
 }
 

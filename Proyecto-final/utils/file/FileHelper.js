@@ -10,10 +10,11 @@ class FileHelper{
         let data = [];
         try {
             data = await fs.promises.readFile(path.join(__dirname, '/',this.fileName), 'utf-8');
+            data = JSON.parse(data);
         } catch (error) {
             console.error("getAll:", error);
         }
-        return JSON.parse(data);
+        return data;
     }
 
     async saveFile(list){
