@@ -1,11 +1,11 @@
 const {uuid} = require('uuidv4');
-const config = require("../../../config");
+const {config} = require("../../../config");
 const FileHelper = require("../../../utils/file/FileHelper");
 
 class CartService{
     constructor(){
-        this.fileHelper = new FileHelper(config.config.fileCart);
-        this.fileHelperProducts = new FileHelper(config.config.fileProducts);
+        this.fileHelper = new FileHelper(config.fileCart);
+        this.fileHelperProducts = new FileHelper(config.fileProducts);
     }
 
     async createCart(){

@@ -1,10 +1,10 @@
 const {uuid} = require('uuidv4');
-const config = require("../../../config");
+const {config} = require("../../../config");
 const FileHelper = require("../../../utils/file/FileHelper");
 
 class ProductService{
     constructor(){
-        this.fileHelper = new FileHelper(config.config.fileProducts);
+        this.fileHelper = new FileHelper(config.fileProducts);
     }
 
     async save(product){

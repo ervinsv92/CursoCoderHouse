@@ -1,6 +1,6 @@
 
 const adminMiddleware = (req,res,next)=>{
-    let isAdmin = req.headers['x-admin'] || 'false';
+    const isAdmin = req.headers['x-admin'] || 'false';
 
     if(isAdmin === 'false'){
         return res.status(403).json({

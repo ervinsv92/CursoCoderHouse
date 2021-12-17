@@ -19,14 +19,14 @@
           <div  class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Productos</a>
+                <a class="nav-link active" aria-current="page" href="index.html">Productos</a>
               </li>
               <li id="divAdmin" class="nav-item dropdown d-none">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Admin
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Mant Productos</a></li>
+                  <li><a class="dropdown-item" href="mant-products.html">Mant Productos</a></li>
                 </ul>
               </li>
             </ul>
@@ -37,7 +37,7 @@
       </nav>
 
       <main class="container mt-2">
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div id="productContainer" class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
               <div class="card h-100">
                 <img src="..." class="card-img-top" alt="...">
@@ -101,6 +101,8 @@
           </div>
       </main>
 
+      <script src="js/session.js"></script>
+      <script src="js/ajax.js"></script>
       <script src="js/index.js"></script>
 </body>
 </html>
