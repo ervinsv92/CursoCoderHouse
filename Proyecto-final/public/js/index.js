@@ -23,6 +23,19 @@ btnToggleAdmin.addEventListener("click", (e)=>{
     showAdmin();
 });
 
+document.body.addEventListener( 'click', function ( event ) {
+    if( event.target.classList.contains("dbtnAddToCart")) {
+        event.preventDefault()
+
+        try {
+            const id = event.target.dataset.id;      
+            //falta
+        } catch (error) {
+            console.error(error)
+        }
+    };
+});
+
 const getProducts = async()=>{
     try {
         const products = await ajax('products');
@@ -40,13 +53,14 @@ const renderProducts = (products)=>{
         items += `
         <div class="col">
               <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="${product.image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">${product.name}</h5>
+                  <h5 class="card-title">${product.code} ${product.name}</h5>
                   <p class="card-text">${product.description}</p>
+                  <p class="card-text">Precio: ${product.price}</p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <a href='#' data-id='${product.id}' class='dbtnAddToCart'>Añadir al carrito</a>
                 </div>
               </div>
             </div>

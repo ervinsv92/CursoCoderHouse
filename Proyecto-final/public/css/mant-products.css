@@ -7,3 +7,11 @@
 .image{
     height: 50px;
 }
+
+.cursor{
+    cursor: pointer;
+}
+
+.selected{
+    background-color: gray;
+}

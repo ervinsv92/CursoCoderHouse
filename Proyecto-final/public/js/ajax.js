@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://localhost:8080/api/';
+const BASE_URL = 'http://localhost:8081/api/';
 
 const ajax = async (endPoint, data = {}, method = 'GET')=>{
     const url = `${BASE_URL}${endPoint}`;
