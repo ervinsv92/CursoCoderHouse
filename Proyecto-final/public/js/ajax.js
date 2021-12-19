@@ -1,9 +1,8 @@
 
-const BASE_URL = 'http://localhost:8081/api/';
+const BASE_URL = 'http://localhost:8080/api/';
 
 const ajax = async (endPoint, data = {}, method = 'GET')=>{
     const url = `${BASE_URL}${endPoint}`;
-    console.log(url)
     const isAdmin = localStorage.getItem(adminSession) || 'false';
     let res;
     if(method === 'GET'){

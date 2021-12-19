@@ -11,7 +11,7 @@ const btnSave = document.getElementById("btnSave");
 const btnDelete = document.getElementById("btnDelete");
 const btnCancel = document.getElementById("btnCancel");
 
-const bodyTableProducts = document.querySelector("#tableProductos tbody");
+const bodyTableProducts = document.querySelector("#tableProducts tbody");
 
 let _idProduct = '';
 
@@ -61,10 +61,26 @@ btnSave.addEventListener("click", async (e)=>{
     }
 });
 
-btnDelete.addEventListener("click", (e)=>{
+btnDelete.addEventListener("click", async (e)=>{
     if(_idProduct === ""){
         alert("Debe seleccionar un producto para eliminar");
         return;
+    }
+
+    if(!confirm("¿Seguro que desea eliminar el producto?")){
+        return;
+    }
+
+    try {
+        const deleted = await ajax(`products/${_idProduct}`, {}, 'DELETE');
+        if(deleted){
+            getProducts();
+            limpiarForm()
+        }else{
+            alert("Ups, algo pasó.")
+        }
+    } catch (error) {
+        console.error(error);
     }
 });
 
@@ -77,6 +93,7 @@ document.body.addEventListener( 'click', function ( event ) {
         try {
             const id = event.target.parentElement.dataset.id;   
             getProductById(id);
+            markSelectedproduct(id);
         } catch (error) {
             console.error(error)
         }
@@ -84,14 +101,16 @@ document.body.addEventListener( 'click', function ( event ) {
 });
 
 const markSelectedproduct = (id)=>{
-    const trs = document.querySelectorAll("#tableProductos tbody tr");
+    desmarkSelectedProduct();
+    const tr = document.querySelector(`#tableProducts tbody [data-id='${id}']`);
+    tr.classList.add("selected")
+}
 
-    [].forEach(trs,function(tr){
+const desmarkSelectedProduct = ()=>{
+    const trs = document.querySelectorAll("#tableProducts tbody tr");
+    trs.forEach(function(tr){
         tr.classList.remove("selected")
     })
-
-    const tr = document.querySelectorAll(`#tableProductos tbody tr [data-id='${id}']`);
-    tr.classList.add("selected")
 }
 
 const showAdmin = ()=>{
@@ -113,6 +132,7 @@ const limpiarForm = ()=>{
     txtPrice.value = "";
     txtStock.value = "";
     txtUrlImage.value = "";
+    desmarkSelectedProduct();
 }
 
 const getProducts = async()=>{

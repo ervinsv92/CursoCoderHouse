@@ -31,6 +31,11 @@
               </li>
             </ul>
           </div>
+          <button id="btnOpenCartModal" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart cursor" viewBox="0 0 16 16" style="color: white;margin-right:10px;padding:0px;">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+          </button>
             <input type="checkbox" class="btn-check" id="btnToggleAdmin" autocomplete="off">
             <label class="btn btn-outline-danger" for="btnToggleAdmin">Admin</label><br>
         </div>
@@ -100,6 +105,40 @@
               </div>
           </div>
       </main>
+
+      <!-- Modal -->
+      <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Carro de la compra</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div id="alertNoProductsCart" class="alert alert-primary" role="alert">
+                No hay productos para mostrar
+              </div>
+
+              <table id="tableCart" class="table">
+                <thead>
+                  <th>Code</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Imagen</th>
+                  <th>Eliminar</th>
+                </thead>
+                <tbody>
+  
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button id="btnCloseModalCart" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button id="btnDeleteCart" type="button" class="btn btn-danger">Eliminar carro de la compra</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <script src="js/session.js"></script>
       <script src="js/ajax.js"></script>
