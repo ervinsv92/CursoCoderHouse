@@ -8,7 +8,7 @@ let contenedor = new Contenedor(RUTA_ARCHIVO);
 
 let configSqlite3 = require('knex')({
     client:'sqlite3',
-    connection:{filename:'../../db/ecomerce.sqlite'}
+    connection:{filename: path.resolve(__dirname,'../../db/ecomerce.sqlite')}
 });
 
 const cnnSqlite3 = new ContenedorKnex(configSqlite3, 'messages');

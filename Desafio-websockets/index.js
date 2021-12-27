@@ -5,7 +5,7 @@ const http = require('http');
 const server = http.createServer(app)
 let Socket = require("./utils/sockets");
 const router = require('./router');
-const PORT = 8080;
+const PORT = 8081;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
