@@ -60,14 +60,14 @@ class Socket{
                     this.io.emit('escuchar_mensajes',await cnnSqlite3.getAll());
                 });
 
-                socket.on("producto", data =>{
+                socket.on("producto", async (data) =>{
                     //Archivos
                     //this.data.guardarProducto(data)
                     //this.io.emit('escuchar_productos', this.data.obtenerProductos());
 
                     //Base datos
-                    this.cnnMariaDB.save(data);
-                    this.io.emit('escuchar_productos', this.cnnMariaDB.getAll());
+                    await cnnMariaDB.save(data);
+                    this.io.emit('escuchar_productos', await cnnMariaDB.getAll());
                 });
             });
         } catch (error) {
