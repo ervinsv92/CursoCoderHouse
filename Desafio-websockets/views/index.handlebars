@@ -36,10 +36,30 @@
     </div>
     <div class="col-6">
         <h2>Chat</h2>
+        <h2>Normalizado: <span id="sNormalizado"></span> - Desnormalizado: <span id="sDesnormalizado"></span></h2>
         <br>
-        <div class="row">
+        <div class="row mt-2">
             <div class="col-6">
-                <input id="txtCorreo" class="form-control" type="email"/>
+                <input id="txtCorreo" class="form-control" type="email"  placeholder="Correo" value="ervin@correo.com"/>
+            </div>
+            <div class="col-6">
+                <input id="txtNombre" class="form-control" type="text"  placeholder="Nombre" value="ervin"/>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <input id="txtApellido" class="form-control" type="text"  placeholder="Apellido" value="solano"/>
+            </div>
+            <div class="col-6">
+                <input id="txtEdad" class="form-control" type="text"  placeholder="Edad" value="29"/>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <input id="txtAlias" class="form-control" type="text"  placeholder="Alias" value="ervin"/>
+            </div>
+            <div class="col-6">
+                <input id="txtAvatar" class="form-control" type="text" placeholder="Url Avatar" value="https://picsum.photos/200/300"/>
             </div>
         </div>
         <div class="row mt-2">
@@ -69,13 +89,35 @@
 
     let txtCorreo = document.getElementById("txtCorreo");
     let txtMensaje = document.getElementById("txtMensaje");
+    let txtNombre = document.getElementById("txtNombre");
+    let txtApellido = document.getElementById("txtApellido");
+    let txtEdad = document.getElementById("txtEdad");
+    let txtAlias = document.getElementById("txtAlias");
+    let txtAvatar = document.getElementById("txtAvatar");
     let btnEnviar = document.getElementById("btnEnviar");
     let divChat = document.getElementById("divChat");
+
+    let sNormalizado = document.getElementById("sNormalizado");
+    let sDesnormalizado = document.getElementById("sDesnormalizado");
 
     const limpiarForm = ()=>{
         txtTitle.innerText = '';
         txtPrice.innerText = '';
         txtThumbnail.innerText = '';
+    }
+
+    const desnormalizarMensajes = (mensajes)=>{
+        const authorSchema = new normalizr.schema.Entity('author',{}, {idAttribute:'correo'});
+        const messageSchema = new normalizr.schema.Entity('mensaje');
+
+        const roomMessage = new normalizr.schema.Entity('rooms',{
+            author:authorSchema,
+            mensaje:[messageSchema]
+        });
+        const arrayWithId = {id:'123', mensajes}
+        const denormalized = normalizr.denormalize(mensajes.result,roomMessage , mensajes.entities);
+        console.log('denormalized: ', denormalized)
+        return denormalized
     }
 
     try{
@@ -103,17 +145,26 @@
             }
         })
 
-        socket.on("escuchar_mensajes", mensajes=>{
-            console.log("escuchando mensajes")
+        socket.on("escuchar_mensajes", mensajesNor=>{
+            console.log("escuchando mensajes", mensajesNor)
+            const mensajes = desnormalizarMensajes(mensajesNor).mensajes
+
+            sNormalizado.textContent = JSON.stringify(mensajesNor).length;
+            sDesnormalizado.textContent = JSON.stringify(mensajes).length;
+            console.log("Normalizado: ",JSON.stringify(mensajesNor).length, " - Desnormalizado: ", JSON.stringify(mensajes).length)
+
             divChat.innerHTML= '';
             let mensajesString = '';
-            mensajes.forEach(function(mensaje){
+
+            if(mensajes || mensajes.length > 0){
+                mensajes.forEach(function(mensaje){
                 mensajesString += `<p style='padding:0px;margin:0px;'>
-                                        <span style='color:blue'>${mensaje.correo}</span>
-                                        <span style='color:red'>[${mensaje.fecha}]:</span>
+                                        <span style='color:blue'>${mensaje.author.correo}</span>
+                                        <span style='color:red'>[${mensaje.fecha || new Date().toString()}]:</span>
                                         <span style='color:green'>${mensaje.mensaje}</span>
                                    </p>`;
-            });
+                });
+            }
 
             divChat.innerHTML = mensajesString;
         })
@@ -130,11 +181,41 @@
         btnEnviar.addEventListener('click', function(e){
             e.preventDefault();
             let correo = txtCorreo.value;
+            let nombre = txtNombre.value;
+            let apellido = txtApellido.value;
+            let edad = txtEdad.value;
+            let alias = txtAlias.value;
+            let avatar = txtAvatar.value;
             let fecha = new Date();
             let mensaje = txtMensaje.value;
 
             if(correo.trim().length == 0){
                 alert("Debe ingresar un correo")
+                return;
+            }
+
+            if(nombre.trim().length == 0){
+                alert("Debe ingresar un nombre")
+                return;
+            }
+
+            if(apellido.trim().length == 0){
+                alert("Debe ingresar un apellido")
+                return;
+            }
+
+            if(edad.trim().length == 0){
+                alert("Debe ingresar una edad")
+                return;
+            }
+
+            if(alias.trim().length == 0){
+                alert("Debe ingresar un alias")
+                return;
+            }
+
+            if(avatar.trim().length == 0){
+                alert("Debe ingresar un avatar")
                 return;
             }
 
@@ -144,13 +225,25 @@
             }
 
             let mensajeEnviar = {
-                correo,
-                fecha: `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`,
+                author:{
+                    correo,
+                    nombre,
+                    apellido,
+                    edad,
+                    alias,
+                    avatar
+                },
+                //fecha: `${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}`,
                 mensaje
             }
 
             socket.emit("mensaje", mensajeEnviar);
             txtMensaje.value = "";
+            txtNombre.value = "";
+            txtApellido.value = "";
+            txtEdad.value = "";
+            txtAlias.value = "";
+            txtAvatar.value = "";
             txtMensaje.focus();
         })
     }catch(err){

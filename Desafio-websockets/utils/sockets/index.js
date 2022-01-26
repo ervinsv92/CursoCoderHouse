@@ -1,4 +1,5 @@
 let {Server: SocketIO} = require('socket.io');
+const {normalize, schema}=require('normalizr');
 const Contenedor = require('../../Contenedor');
 let Data = require('../../data');
 let path = require('path');
@@ -37,37 +38,60 @@ class Socket{
         this.data = new Data();
     }
 
+    normalizarMensajes(mensajes){
+        const authorSchema = new schema.Entity('author',{}, {idAttribute:'correo'});
+        const messageSchema = new schema.Entity('mensaje');
+
+        const roomMessage = new schema.Entity('rooms',{
+            author:authorSchema,
+            mensaje:[messageSchema]
+        });
+        const arrayWithId = {id:'123', mensajes}
+        const normalized = normalize(arrayWithId, roomMessage);
+        return mensajes.length ==0?[]:normalized;
+    }
+
     async init(){
         try {
             await cnnSqlite3.init();
             await cnnMariaDB.init();
             this.io.on("connection", async (socket) =>{
                 //Archivos
-                // socket.emit("escuchar_productos", this.data.obtenerProductos());
-                // socket.emit("escuchar_mensajes", await contenedor.getAll());
+                socket.emit("escuchar_productos", this.data.obtenerProductos());
+                const normalized = this.normalizarMensajes(await contenedor.getAll())
+                
+                console.log('normalizado: ', normalized)
+                socket.emit("escuchar_mensajes", normalized);
 
                 //Base datos
-                socket.emit("escuchar_productos", await cnnMariaDB.getAll());
-                socket.emit("escuchar_mensajes", await cnnSqlite3.getAll());
+                //socket.emit("escuchar_productos", await cnnMariaDB.getAll());
+                //socket.emit("escuchar_mensajes", await cnnSqlite3.getAll());
 
                 socket.on("mensaje", async (data) =>{
+
+                    console.log('data: ', data)
+
                     //Archivos
-                    //await contenedor.save(data);
+                    await contenedor.save(data);
+                    const normalized = this.normalizarMensajes(await contenedor.getAll())
+                
+                    console.log('normalizado: ', normalized)
+                    socket.emit("escuchar_mensajes", normalized);
                     //this.io.emit('escuchar_mensajes',await contenedor.getAll());         
                     
                     //Base datos
-                    await cnnSqlite3.save(data);
-                    this.io.emit('escuchar_mensajes',await cnnSqlite3.getAll());
+                    //await cnnSqlite3.save(data);
+                    //this.io.emit('escuchar_mensajes',await cnnSqlite3.getAll());
                 });
 
                 socket.on("producto", async (data) =>{
                     //Archivos
-                    //this.data.guardarProducto(data)
-                    //this.io.emit('escuchar_productos', this.data.obtenerProductos());
+                    this.data.guardarProducto(data)
+                    this.io.emit('escuchar_productos', this.data.obtenerProductos());
 
                     //Base datos
-                    await cnnMariaDB.save(data);
-                    this.io.emit('escuchar_productos', await cnnMariaDB.getAll());
+                    //await cnnMariaDB.save(data);
+                    //this.io.emit('escuchar_productos', await cnnMariaDB.getAll());
                 });
             });
         } catch (error) {
