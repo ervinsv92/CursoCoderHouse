@@ -5,10 +5,23 @@ const http = require('http');
 const server = http.createServer(app)
 let Socket = require("./utils/sockets");
 const router = require('./router');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const PORT = 8081;
-
+const advancedOptions = {useNewUrlParser:true, useUnifiedTopology:true};
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
+app.use(session({
+    store:MongoStore.create({mongoUrl:'mongodb+srv://esv:esv@cluster0.nssrw.mongodb.net/codersockets', mongoOptions:advancedOptions}),
+    secret:'soyunaclavesecreta',
+    resave:false,
+    saveUninitialized:false,
+    cookie: {
+        expires: 60000
+    }
+}));
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");

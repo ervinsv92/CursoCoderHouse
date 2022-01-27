@@ -1,7 +1,16 @@
 <h1>Registrar producto - Handlebars</h1>
 <br>
+{{#if nombre}}
+<div class="alert alert-primary" role="alert">
+  Bienvenido {{nombre}} - <a class='btn btn-danger' href="/logout">Salir</a>
+</div>
+{{/if}}
+<br>
+
 <a class="btn btn-success" href="/productos">Productos</a>
 <br>
+
+
 
 <div class="row mb-1">
     <div class="col-4">
