@@ -4,6 +4,7 @@ let router = new Router();
 const Data = require('./data');
 const ProductFaker = require('./test/utils/dataFaker');
 let data = new Data();
+const passport = require('passport');
 
 router.get("/", (req, res) => {
 
@@ -30,10 +31,20 @@ router.get("/signout", (req, res) => {
     })
 });
 
-router.post("/sigin", (req, res) => {
+router.post("/sigin", passport.authenticate('login', {failureRedirect:'faillogin'}), (req, res) => {
     const {nombre} = req.body;
     req.session.nombre = nombre;
     res.redirect("/");
+});
+
+router.post("/signup", passport.authenticate('signup', {failureRedirect:'failsignup'}), (req, res) => {
+    const {nombre} = req.body;
+    req.session.nombre = nombre;
+    res.redirect("/");
+});
+
+router.get("/signup", (req, res) => {
+    res.render("partials/signup");
 });
 
 router.get("/productos", (req, res) => {
@@ -42,6 +53,14 @@ router.get("/productos", (req, res) => {
 
 router.get("/productos-test", (req, res) => {
     res.render("partials/products", {productos:ProductFaker.obtenerProductos()});
+});
+
+router.get("/faillogin", (req, res) => {
+    res.render("partials/faillogin");
+});
+
+router.get("/failsignup", (req, res) => {
+    res.render("partials/failsignup");
 });
 
 module.exports = router;
