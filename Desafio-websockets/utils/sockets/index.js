@@ -53,8 +53,8 @@ class Socket{
 
     async init(){
         try {
-            await cnnSqlite3.init();
-            await cnnMariaDB.init();
+            //await cnnSqlite3.init();
+            //await cnnMariaDB.init();
             this.io.on("connection", async (socket) =>{
                 //Archivos
                 socket.emit("escuchar_productos", this.data.obtenerProductos());

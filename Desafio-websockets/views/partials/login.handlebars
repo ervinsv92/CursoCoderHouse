@@ -1,9 +1,13 @@
 <div class="row mb-1">
     <div class="col-4">
-        <form id="formLogin" action="/sigin" method="POST">
+        <h2>Login</h2>
+        <form id="formLogin" action="/signin" method="POST">
             <div class="mb-3">
-                <label for="title" class="form-label">Nombre</label>
-                <input id="txtNombre" type="text" class="form-control" name="nombre">
+                <label for="txtUserName" class="form-label">Usuario</label>
+                <input id="txtUser" type="text" class="form-control" name="username">
+
+                <label for="txtPassword" class="form-label">Contraseña</label>
+                <input id="txtPassword" type="password" class="form-control" name="password">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
