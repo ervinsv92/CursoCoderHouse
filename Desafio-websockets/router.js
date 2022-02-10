@@ -7,9 +7,29 @@ let data = new Data();
 //const passport = require('passport');
 
 const serverRouter = (app, passport)=>{
+
+    let isNoAuth =(req, res, next)=>{
+        //console.log(req)
+        if(req.isAuthenticated()){
+            next();
+        }else{
+            res.redirect("/signin")
+        }
+    }
+
     app.use('/', router)
-    router.get("/", (req, res) => {
-        console.log("inicio de todo: ", req.session.nombre)
+    router.get("/", isNoAuth, (req, res) => {
+        console.log("inicio de todo: ", req.user)
+        //console.log("está autenticado: ", req.isAuthenticated())
+        //if(req.session.nombre){
+            //res.render("index", {nombre:req.session.nombre || 'soy el pato'});
+        //}else{
+           res.render("index", {username:req.user.username});
+        //}
+    });
+    
+    router.get("/signin", (req, res) => {
+        console.log("inicio de todo: ", req.session)
         
         //if(req.session.nombre){
             //res.render("index", {nombre:req.session.nombre || 'soy el pato'});
@@ -17,22 +37,26 @@ const serverRouter = (app, passport)=>{
            res.render("partials/login");
         //}
     });
-    
+
     router.post("/productos", (req, res) => {
         data.guardarProducto(req.body);
         res.redirect("/productos");
     });
     
     router.get("/logout", (req, res) => {
-        res.render("partials/logout", {nombre:req.session.nombre});
+        let username = req.user.username;
+        req.logout();
+        res.render("partials/logout", {username});
     });
     
-    router.get("/signout", (req, res) => {
-        req.session.destroy(err=>{
-            if(!err) res.redirect("/");
-            else res.send("Error de logout")
-        })
-    });
+    // router.get("/signout", (req, res) => {
+    //     req.logout()
+    //     res.render
+    //     // req.session.destroy(err=>{
+    //     //     if(!err) res.redirect("/");
+    //     //     else res.send("Error de logout")
+    //     // })
+    // });
     
     router.post("/signin", passport.authenticate('login', {failureRedirect:'/faillogin', successRedirect: '/',}), (req, res) => {
         const {nombre} = req.body;
@@ -41,8 +65,8 @@ const serverRouter = (app, passport)=>{
     });
     
     //router.post("/signup", (req, res) => {
-    router.post("/signup", passport.authenticate('signup', {failureRedirect:'/failsignup'}), (req, res) => {
-        console.log("registro prueba")
+    router.post("/signup", passport.authenticate('register', {failureRedirect:'/failsignup'}), (req, res) => {
+        console.log("registro prueba", req.session.Usuario)
         //const {nombre} = req.body;
         //req.session.nombre = nombre;
         //const {username} = req.body
@@ -70,13 +94,7 @@ const serverRouter = (app, passport)=>{
         res.render("partials/failsignup");
     });
     
-    function checkAuthentication(req, res, next){
-        if(req.isAuthenticated()){
-            next();
-        }else{
-            res.redirect("/login")
-        }
-    }
+    
 }
 
 module.exports = serverRouter;
