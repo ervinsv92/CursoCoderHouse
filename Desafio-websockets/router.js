@@ -1,12 +1,14 @@
 const express = require("express");
+const {fork} = require("child_process");
 const {Router} = express;
 let router = new Router();
+let routerApi = new Router();
 const Data = require('./data');
 const ProductFaker = require('./test/utils/dataFaker');
 let data = new Data();
 //const passport = require('passport');
 
-const serverRouter = (app, passport)=>{
+const serverRouter = (app, passport, arguments)=>{
 
     let isNoAuth =(req, res, next)=>{
         //console.log(req)
@@ -18,6 +20,7 @@ const serverRouter = (app, passport)=>{
     }
 
     app.use('/', router)
+    app.use('/api/', routerApi)
     router.get("/", isNoAuth, (req, res) => {
         console.log("inicio de todo: ", req.user)
         //console.log("está autenticado: ", req.isAuthenticated())
@@ -94,7 +97,36 @@ const serverRouter = (app, passport)=>{
         res.render("partials/failsignup");
     });
     
-    
+    router.get("/info", (req, res) => {
+
+        let info = {
+            arguments:JSON.stringify(arguments),
+            so:process.platform,
+            version:process.version,
+            memory:process.memoryUsage.rss(),
+            path:process.execPath,
+            pid:process.pid,
+            folder:process.cwd()
+        }
+
+        res.render("partials/process", info);
+    });
+
+    routerApi.get('/random', (req, res)=>{
+        const cantParam = parseInt(req.query.cant) || 100000000;
+        //console.log("cant: ", cantParam)
+
+        //return res.send('10')
+
+        const forked = fork('./child-process/child.js')
+        //console.log("fork")
+        forked.on('message', cant=>{
+            //console.log("on cant: ",cant)
+            res.send(JSON.stringify(cant))
+        })
+        forked.send({'message':cantParam})
+        //console.log("fork fin")
+    })
 }
 
 module.exports = serverRouter;

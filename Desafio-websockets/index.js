@@ -9,12 +9,23 @@ const serverRouter = require("./router");
 const session = require('express-session');
 //const {configMongoDB} = require('./config');
 //const MongoStore = require('connect-mongo');
-const PORT = 8081;
+
 let passport = require('passport');
 const passportStrategy  = require('passport-local').Strategy;
 //const advancedOptions = {useNewUrlParser:true, useUnifiedTopology:true};
 const mongoContainerUsers = require('./utils/containers/mongoContainerUsers');
 const {isValidPassword, createHash} = require('./utils/bcrypt');
+let yargs = require('yargs/yargs')(process.argv.slice(2));
+const procArgv = yargs.default({
+    port:8081
+}).alias({
+    p:'port'
+}).argv;
+
+delete procArgv.p
+delete procArgv["$0"]
+
+let PORT = procArgv.port;
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //app.use(cookieParser());
@@ -110,7 +121,7 @@ passport.deserializeUser(async (username, done)=>{
 
 app.use(passport.initialize());
 app.use(passport.session());
-serverRouter(app,passport)
+serverRouter(app,passport, procArgv);
 
 server.listen(PORT, err =>{
     if(err) throw new Error(`Error en servidor ${err}`)
