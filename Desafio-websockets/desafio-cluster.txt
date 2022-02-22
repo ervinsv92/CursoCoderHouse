@@ -1,0 +1,23 @@
+** Forever - Comandos**
+forever list
+forever stopall
+forever start index-forever-pm2.js -w
+forever stop pid
+forever --help
+
+
+** PM2 - Comandos**
+-Modo fork-
+pm2 start index-forever-pm2.js --watch
+
+-Modo cluster-
+pm2 start index-forever-pm2.js --watch -i max
+
+pm2 list
+pm2 stop id
+pm2 restart id
+pm2 delete id
+pm2 stop all
+
+** Comandos SO **
+tasklist /fi "imagename eq node.exe" 

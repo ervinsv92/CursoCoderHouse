@@ -6,6 +6,7 @@ let routerApi = new Router();
 const Data = require('./data');
 const ProductFaker = require('./test/utils/dataFaker');
 let data = new Data();
+const numCpus = require('os').cpus().length;
 //const passport = require('passport');
 
 const serverRouter = (app, passport, arguments)=>{
@@ -106,7 +107,8 @@ const serverRouter = (app, passport, arguments)=>{
             memory:process.memoryUsage.rss(),
             path:process.execPath,
             pid:process.pid,
-            folder:process.cwd()
+            folder:process.cwd(),
+            numCpus
         }
 
         res.render("partials/process", info);

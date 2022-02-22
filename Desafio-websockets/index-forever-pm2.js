@@ -1,6 +1,4 @@
 let express = require("express");
-const cluster = require('cluster');
-const numCpus = require('os').cpus().length;
 let app = express();
 let {engine} = require("express-handlebars");
 const http = require('http');
@@ -135,21 +133,5 @@ const runServer = ()=>{
     })
 }
 
-if(MODE == 'cluster'){
-    if(cluster.isMaster){
-        console.log(`Master PID: ${process.pid} - FH: ${new Date()}`)
-
-        for(let contador = 0; contador<numCpus; contador++){
-            cluster.fork();   
-        }
-
-        cluster.on("exit", (worker, code, signal)=>{
-            console.log(`Murio el subproceso ${worker.process.pid} - FH: ${new Date()}`)
-        })
-    }else{
-        runServer();
-    }
-}else{
-    runServer();
-}
+runServer()
 
